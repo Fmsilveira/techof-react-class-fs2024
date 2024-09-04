@@ -10,19 +10,31 @@ const numberRangeChecker = (number) => {
   return "Over 100";
 }
 
+// Functional component
 function App() {
   const numbers = [
-    10, 50, 60, 110, 150
+    10, 50, 60, 110, 150, 200
   ]
   return (
     <div>
-      {
-        numbers.map((number) => (
-          <p>{number} is {numberRangeChecker(number)}</p>
-        ))
-      }
+      <p>Hello</p>
+      <p>Hello</p>
+      <p>Hello</p>
     </div>
   );
 }
+
+// Class component
+// class App extends React.Component {
+//   render() {
+//     return (
+//       <div>
+//         <p>Hello</p>
+//         <p>Hello</p>
+//         <p>Hello</p>
+//       </div>
+//     );
+//   }
+// }
 
 export default App;
