@@ -1,0 +1,17 @@
+.form {
+  margin-top: 0.5em;
+  border: 1px solid black;
+}
+
+.form-input {
+  padding: 0.2em;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+}
+
+.error {
+  border: 1px solid red;
+}
