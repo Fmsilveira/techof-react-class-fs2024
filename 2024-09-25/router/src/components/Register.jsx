@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Navbar from "./Navbar";
 
 function Register() {
   const navigate = useNavigate();
+
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [isValidName, setIsValidName] = useState(true);
@@ -26,6 +27,10 @@ function Register() {
     setPassword('');
     navigate('/login');
   }
+
+  useEffect(() => {
+    console.log('Register component mounted');
+  });
 
   return (
     <div>
@@ -62,6 +67,11 @@ function Register() {
           >
             Registrar
           </button>
+          <Link to='/login'>
+            <button>
+              Acessar minha conta
+            </button>
+          </Link>
         </div>
       </div>
     </div>
