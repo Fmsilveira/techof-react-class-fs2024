@@ -1,8 +1,15 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { Stack, TextField, Button, Alert } from '@mui/material';
 
 import Navbar from "../components/Navbar";
 import { AuthContext } from "../context/AuthContext";
+
+function ErrorLoginAlert() {
+  return (
+    <Alert severity="error">Invalid username or password</Alert>
+  );
+}
 
 function Login() {
   const navigate = useNavigate();
@@ -11,6 +18,8 @@ function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isValidPassword, setIsValidPassword] = useState(true);
+  const [error, setError] = useState(false);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
 
   const validatePassword = (password) => {
     return password.length >= 8;
@@ -21,17 +30,11 @@ function Login() {
       return user.username === username
     });
 
-    if (!user) {
-      alert('User not found');
+    if (!user || user.password !== password) {
       setUsername('');
       setPassword('');
-      return;
-    }
-
-    if (user.password !== password) {
-      alert('Invalid password');
-      setUsername('');
-      setPassword('');
+      setError(true);
+      setShowErrorAlert(true);
       return;
     }
 
@@ -45,44 +48,49 @@ function Login() {
     setIsValidPassword(validatePassword(password));
   }, [password]);
 
+  useEffect(() => {
+    let timeout = setTimeout(() => {
+      setShowErrorAlert(false);
+    }, 3000);
+
+    return () => {
+      clearTimeout(timeout);
+    }
+  }, [error]);
+
   return (
     <div>
       <div>
         <Navbar />
       </div>
       <div>
+        {showErrorAlert && <ErrorLoginAlert />}
         <h1>Login</h1>
 
         <div>
-          <div>
-            <label htmlFor='username'>Username:</label>
-            <input
+          <Stack spacing={2}>
+            <TextField
               type='text'
               id='username'
               name='username'
+              label="Username"
               value={username}
+              error={error}
               onChange={(event) => setUsername(event.target.value)}
             />
-          </div>
-
-          <div>
-            <label htmlFor='password'>Password:</label>
-            <input
-              type='text'
+            <TextField
+              type='text' // Change this to 'password'
               id='password'
               name='password'
+              label="Password"
               value={password}
-              style={{
-                ...!isValidPassword && { border: '1px solid red' },
-              }}
+              error={!isValidPassword || error}
               onChange={(event) => setPassword(event.target.value)}
             />
-          </div>
+            <Button variant="contained" onClick={handleLogin}>Login</Button>
+          </Stack>
 
-          <button onClick={handleLogin}>Login</button>
         </div>
-
-
       </div>
     </div>
   );

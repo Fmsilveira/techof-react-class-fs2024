@@ -1,5 +1,6 @@
 import { useRef, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button, TextField, Stack } from '@mui/material';
 
 import Navbar from "../components/Navbar";
 
@@ -46,18 +47,27 @@ function Register() {
         <h1>Register</h1>
 
         <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor='username'>Username:</label>
-            <input type='text' id='username' name='username' ref={usernameRef} />
-          </div>
-          <div>
-            <label htmlFor='password'>Password:</label>
-            <input type='text' id='password' name='password' ref={passwordRef} />
+          <Stack spacing={2}>
+            <TextField
+              type='text'
+              id='username'
+              name='username'
+              inputRef={usernameRef}
+              label="Username"
+              variant="standard"
+            />
+            <TextField
+              type='text'
+              id='password'
+              name='password'
+              inputRef={passwordRef}
+              label="Password"
+              variant="standard"
+              error={!isValidPassword}
+            />
             {!isValidPassword && <p>Password must be at least 8 characters long</p>}
-          </div>
-          <div>
-            <button type='submit'>Register</button>
-          </div>
+            <Button variant="contained" type='submit'>Register</Button>
+          </Stack>
         </form>
       </div>
     </div>

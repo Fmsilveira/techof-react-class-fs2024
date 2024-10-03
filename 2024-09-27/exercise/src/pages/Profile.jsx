@@ -7,9 +7,10 @@ import { AuthContext } from "../context/AuthContext";
 export default function Profile() {
   const navigate = useNavigate();
   const { currentUser } = useContext(AuthContext);
+  console.log('Profile', currentUser)
   
   if (!currentUser.username) {
-    navigate('/login');
+    // navigate('/login');
   }
 
   const usernameStyle = {
