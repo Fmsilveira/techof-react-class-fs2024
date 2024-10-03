@@ -17,7 +17,7 @@ function Login() {
   };
 
   function handleLogin() {
-    const [ user ] = users.filter(user => {
+    const [user] = users.filter(user => {
       return user.username === username
     });
 

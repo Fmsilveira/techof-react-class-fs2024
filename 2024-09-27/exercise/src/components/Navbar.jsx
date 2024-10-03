@@ -1,6 +1,10 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
+import { AuthContext } from '../context/AuthContext';
+
 export default function Navbar() {
+  const { currentUser, logoutUser } = useContext(AuthContext);
   const styles = {
     ul: {
       display: 'flex',
@@ -19,8 +23,10 @@ export default function Navbar() {
         style={styles.ul}
       >
         <li><Link to='/'>Home</Link></li>
-        <li><Link to='/register'>Register</Link></li>
-        <li><Link to='/login'>Login</Link></li>
+        {currentUser.username && <li><Link to='/profile'>Profile</Link></li>}
+        {currentUser.username && <button onClick={logoutUser}>Logout</button>}
+        {!currentUser.username && <li><Link to='/register'>Register</Link></li>}
+        {!currentUser.username && <li><Link to='/login'>Login</Link></li>}
       </ul>
     </nav>
   );
