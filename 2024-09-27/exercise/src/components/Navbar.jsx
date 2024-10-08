@@ -56,6 +56,7 @@ export default function Navbar() {
               onClose={handleClose}
             >
               <MenuItem onClick={() => navigateTo('/profile')}>Profile</MenuItem>
+              <MenuItem onClick={() => navigateTo('/best-sellers')}>Best Sellers</MenuItem>
               <MenuItem onClick={handleClose}>My account</MenuItem>
             </Menu>
           </>
