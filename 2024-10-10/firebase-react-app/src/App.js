@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, onSnapshot, query, where } from 'firebase/firestore';
 
 import db from './firebase';
 
@@ -10,17 +10,37 @@ function App() {
 
   const usersCollectionRef = collection(db, 'users');
 
-  useEffect(() => {
-    const getUsers = async () => {
-      const querySnapshot = await getDocs(usersCollectionRef);
+  // One Time Get Function
+  // useEffect(() => {
+  //   const getUsers = async () => {
+  //     const querySnapshot = await getDocs(usersCollectionRef);
 
-      const items = [];
-      querySnapshot.forEach((doc) => {
-        items.push(doc.data());
-      });
-      setUsers(items);
+  //     const items = [];
+  //     querySnapshot.forEach((doc) => {
+  //       items.push(doc.data());
+  //     });
+  //     setUsers(items);
+  //   };
+  //   getUsers();
+  // }, []);
+
+  // Realtime Get Function
+  useEffect(() => {
+
+    const unsubscribe = onSnapshot(
+      query(usersCollectionRef), 
+      (querySnapshot) => {
+        const items = [];
+        querySnapshot.forEach((doc) => {
+          items.push(doc.data());
+        });
+        setUsers(items);
+      }
+    );
+
+    return () => {
+      unsubscribe();
     };
-    getUsers();
   }, []);
 
   return (
