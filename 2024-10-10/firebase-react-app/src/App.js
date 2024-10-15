@@ -1,21 +1,25 @@
 import React from 'react';
 
-import useFirestore from './hooks/useFirestore';
 import './App.css';
+import Users from './components/Users';
+import Form from './components/Form';
+import Search from './components/Search';
+import Update from './components/Update';
+
+import useFirestore from './hooks/useFirestore';
 
 function App() {
-  const [users, setUsers] = useFirestore('users');
+  const { users } = useFirestore('users');
 
   return (
     <div>
-      <h1>Users</h1>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            {user.name} - {user.age} - {user.hasDog ? 'Has a dog' : 'No dog'}
-          </li>
-        ))}
-      </ul>
+      <Form />
+      <Search />
+      <Users
+        showTitle={true}
+        users={users}
+      />
+      <Update />
     </div>
   );
 }
